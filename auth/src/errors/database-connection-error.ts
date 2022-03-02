@@ -1,7 +1,17 @@
-export class databaseConnectionError extends Error{
-  message: string;
+import { CustomError } from "./customError"
 
-  constructor{
-    
+export class DatabaseConnectionError extends CustomError{
+  reason = 'error conectiong to mongo'
+  statusCode = 500
+
+  constructor(){
+    super('unable to connect to mongo')
+ 
+    Object.setPrototypeOf(this, DatabaseConnectionError.prototype)
+  }
+
+  serializeErrors() {
+    return [{message: this.reason, field: "database"}]; 
   }
 }
+
