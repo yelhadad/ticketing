@@ -3,6 +3,7 @@ kind: Config
 deploy:
   kubectl:
     manifests:
+      - ./infra/tickting-np.yaml
       - ./infra/k8s/*
 build:
   local:

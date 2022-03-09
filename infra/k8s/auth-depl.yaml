@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth-depl
+  # namespace: tickting
 spec:
   replicas: 1
   selector:
@@ -15,11 +16,19 @@ spec:
       containers:
         - name: auth
           image: yelhadad/auth
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: auth-srv
+#  namespace: tickting
 spec:
   selector:
     app: auth

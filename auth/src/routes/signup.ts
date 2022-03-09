@@ -5,6 +5,8 @@ import { DatabaseConnectionError } from "../errors/database-connection-error";
 import { RequestValidationError } from "../errors/request-validation-error";
 import { User } from "../models/user";
 import { Password } from "../services/password";
+import jwt from "jsonwebtoken";
+import { validateRequest } from "../middlewere/validation-handler";
 
 const router = express.Router();
 
@@ -16,12 +18,12 @@ router.post('/api/users/signup',[
   .trim()
   .isLength({min: 4, max: 20})
   .withMessage('password should be between 4 to 20 characters')
-],
+], validateRequest,
    async (req: Request, res: Response) =>{
-   const errors = validationResult(req)
-   if(!errors.isEmpty()){
-    throw new RequestValidationError(errors.array()) 
-   }
+  // const errors = validationResult(req)
+  // if(!errors.isEmpty()){
+  //  throw new RequestValidationError(errors.array()) 
+  // }
 
 
   const { email ,password }: {email: string, password: string}  = req.body;
@@ -36,7 +38,20 @@ router.post('/api/users/signup',[
     console.log('creating a user')
     const newUser = User.build({email: email, password: password })
     await newUser.save();
-    return res.status(201).send(await User.findOne({email: email}).exec());
+
+    // Generate JWT
+    const userJwt = jwt.sign({
+      id: newUser.id,
+      email: newUser.email
+    }, process.env.JWT_KEY!)
+
+    // Store it on session object
+    req.session = {
+      jwt: userJwt
+    };
+    // return with mongoose search
+    // return res.status(201).send(await User.findOne({email: email}).exec());
+    return res.status(201).send(newUser)
   }
 })
 
