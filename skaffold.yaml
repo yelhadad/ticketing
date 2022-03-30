@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v2beta26
 kind: Config
 deploy:
   kubectl:
@@ -15,5 +15,13 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "./src/**/*.ts"
-            dest: .
+          - src: "*src/**/*.ts"
+            dest: "."
+    - image: yelhadad/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*/**/*.js"
+            dest: "."

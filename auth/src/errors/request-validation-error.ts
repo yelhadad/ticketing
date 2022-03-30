@@ -3,7 +3,7 @@ import { CustomError } from "./customError";
 
 export class RequestValidationError extends CustomError {
   errors: ValidationError []
-  
+  //
   statusCode: number
   constructor(errors: ValidationError[]){
     super('there was an error in validation')
