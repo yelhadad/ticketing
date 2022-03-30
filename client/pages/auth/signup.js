@@ -35,6 +35,8 @@ export default function Signup() {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [confermPassword, setConfermPassword] = useState();
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
   const router = useRouter();
 
   const handleErrors = () => {
@@ -47,6 +49,9 @@ export default function Signup() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if(password !== confermPassword){
+      return null;
+    } else {
     //const data = new FormData(event.currentTarget);
     try {
       const response = await axios.post('/api/users/signup', {
@@ -59,7 +64,8 @@ export default function Signup() {
     }
     setEmail('');
     setPassword('');
-  };
+    setConfermPassword('');
+  }};
 
   return (
     <ThemeProvider theme={theme}>
@@ -96,7 +102,7 @@ export default function Signup() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="Password"
               label="Password"
               type="password"
               id="password"
@@ -104,13 +110,22 @@ export default function Signup() {
               onChange={e => setPassword(e.target.value)}
               value={password}
             />
+            <TextField
+            margin='normal' required fullWidth 
+            name='conferm password' label='Conferm Password'
+            type={password} id='conferm-password'
+            onChange={e => setConfermPassword(e.target.value)}
+            value={confermPassword}
+            />
+            {password !== confermPassword && 
+            <Typography variant='h3' color={'red'}>passwords not match</Typography>}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign up
             </Button>
             <Grid container justifyContent="center">
               <Grid item >
