@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
-  # namespace: tickting
+  name: tickets-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: tickets
   template:
     metadata:
       labels:
-        app: auth
+        app: tickets
     spec:
       containers:
-        - name: auth
-          image: yelhadad/auth
+        - name: tickets
+          image: yelhadad/tickets
           env:
             - name: MONGO_URI
-              value: mongodb://auth-mongo-srv:27017/auth
+              value: mongodb://tickets-mongo-srv:27017/tickets
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -29,11 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
-#  namespace: tickting
+  name: tickets-srv
 spec:
   selector:
-    app: auth
+    app: tickets
   ports:
     - protocol: TCP
       port: 4000

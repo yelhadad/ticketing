@@ -7,8 +7,8 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewere/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler } from '@ye-ticketing/common';
+import { NotFoundError } from '@ye-ticketing/common';
 
 const app = express();
 app.set('trust proxy', true);
