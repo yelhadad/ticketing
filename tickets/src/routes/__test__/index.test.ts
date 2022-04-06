@@ -2,10 +2,11 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it('can fetch list of tickets', async () => {
-  const x = 5
+  const x = 6
   const title = 'title number: '
-  for(let i = 0; i > x; i++)
-  await request(app)
+  const idArr: string[] = []
+  for(let i = 1; i < x; i++){
+    const postResponse = await request(app)
     .post('/api/tickets')
     .set('Cookie', global.signin())
     .send({
@@ -13,6 +14,8 @@ it('can fetch list of tickets', async () => {
       price: i
     })
     .expect(201);
+    idArr.push(postResponse.body.id)
+  }
 
     const response = await request(app)
       .get('/api/tickets')
