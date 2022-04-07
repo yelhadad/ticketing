@@ -1,6 +1,7 @@
 import { response } from 'express';
 import request from 'supertest';
 import { app } from '../../app';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('can only accessed if the user is signed in', async () => {
   const response = await request(app)
@@ -69,4 +70,26 @@ it('updates a ticket base on his user id', async () => {
     console.log(postResponse.body.title)
     //console.log(putResponse.body.error[0].message)
     expect(putResponse.body.price).toEqual(11);
+})
+
+it('published event after the ticket was updated', async () => {
+  const postResponse = await request(app)
+  .post('/api/tickets')
+  .set('Cookie', global.signin())
+  .send({
+    title: 'yoav',
+    price: 10
+  })
+  .expect(201);
+
+  const postTitle = postResponse.body.title
+  const putResponse = await request(app)
+    .put(`/api/tickets/${postResponse.body.id}`)
+    .set('Cookie', global.signin())
+    .send({
+      title: postTitle,
+      price: 11
+    })
+    .expect(202)
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
 })

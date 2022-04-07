@@ -2,6 +2,8 @@ import express , { Request, Response } from 'express';
 import {  notAutherizedError, requireAuth, ServerError, validateRequest } from '@ye-ticketing/common';
 import { Ticket } from '../models/ticket';
 import { body } from 'express-validator'
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -29,7 +31,23 @@ async (req: Request, res: Response) =>{
   } catch (error) {
     throw new ServerError('unable to update this ticket');
   }
-  const updatedTicket = await Ticket.findOne({id: ticketId})
+  let updatedTicket;
+  try {
+    updatedTicket = await Ticket.findOne({id: ticketId})
+  } catch (error) {
+    throw new ServerError('unable to update this ticket');
+  }
+  try {
+    const ticketPub =  new TicketUpdatedPublisher(natsWrapper.client)
+    ticketPub.publish({
+      id: updatedTicket!._id,
+      title: updatedTicket!.title,
+      price: updatedTicket!.price,
+      userId: updatedTicket!.userId
+    }) 
+  } catch (error) {
+    console.error(error)
+  }
   res.status(202).send(updatedTicket);
 
 })

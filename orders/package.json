@@ -1,5 +1,5 @@
 {
-  "name": "tickets",
+  "name": "orders",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,6 +23,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@ye-ticketing/common": "^1.0.3",
+    "body-parser": "^1.20.0",
     "cookie-session": "^2.0.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",

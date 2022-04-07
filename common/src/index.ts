@@ -10,3 +10,10 @@ export * from './middlewere/current-user-middleware';
 export * from './middlewere/error-handler';
 export * from './middlewere/require-auth';
 export * from './middlewere/validation-handler';
+export * from './events/subjects';
+export * from './events/classes/Listener';
+export * from './events/classes/publisher';
+export * from './events/interfaces/base-event';
+export * from './events/interfaces/ticket-created-event';
+export * from './events/interfaces/ticket-updated-event';
+

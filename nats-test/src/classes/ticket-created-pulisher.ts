@@ -5,10 +5,9 @@ import { Publisher } from "./publisher";
 
 export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
 
-  readonly subject: Subjects.ticketCreated;
+  readonly subject = Subjects.ticketCreated;
 
   constructor(client: Stan) {
     super(client)
-    this.subject = Subjects.ticketCreated;
   }
 }

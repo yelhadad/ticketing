@@ -12,7 +12,7 @@ const data = {
 // stan is could be refer as a client
 const stan = nats.connect('ticketing', 'abc', {
   // the actual port is 4222
-  url: 'http://localhost:31417'
+  url: 'http://localhost:31929'
 });
 
 stan.on('connect', async () => {
