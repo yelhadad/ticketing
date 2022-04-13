@@ -5,8 +5,6 @@ import { natsWrapper } from './nats-wrapper';
 
 const port = 4000;
 const start = async () =>{
-  let envArr = [process.env.JWT_KEY, process.env.MONGO_URI, process.env.NATS_CLUSTER_ID,
-    process.env.NATS_URL, process.env.NATS_CLIENT_ID]
 if(process.env.JWT_KEY === undefined || process.env.MONGO_URI === undefined ||
   process.env.NATS_CLUSTER_ID === undefined || process.env.NATS_URL === undefined ||
   process.env.NATS_CLIENT_ID === undefined) {

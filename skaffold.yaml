@@ -33,7 +33,7 @@ build:
         manual:
           - src: "*src/**/*.ts"
             dest: "."
-    - image: yelhadad/oreders
+    - image: yelhadad/orders
       context: orders
       docker:
         dockerfile: Dockerfile

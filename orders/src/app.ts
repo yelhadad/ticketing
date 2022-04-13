@@ -4,10 +4,10 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler } from '@ye-ticketing/common'; 
 import { NotFoundError, currentUser } from '@ye-ticketing/common';
-import { createTicketRouter } from './routes/new';
-import { showTicket } from './routes/show';
-import { ticketIndexRouter } from './routes';
-import { ticketUpdateRouter } from './routes/update';
+import { newOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { indexOrdersRouter } from './routes/index';
+import { deleteOrderRouter } from './routes/cancel';
 
 const app = express();
 app.set('trust proxy', true);
@@ -21,10 +21,11 @@ app.use(
 
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicket);
-app.use(ticketIndexRouter);
-app.use(ticketUpdateRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrdersRouter);
+app.use(deleteOrderRouter);
+
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });

@@ -16,4 +16,5 @@ export * from './events/classes/publisher';
 export * from './events/interfaces/base-event';
 export * from './events/interfaces/ticket-created-event';
 export * from './events/interfaces/ticket-updated-event';
+export * from './events/types/order-status'
 
