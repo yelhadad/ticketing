@@ -1,8 +1,6 @@
 import { ServerError } from '@ye-ticketing/common';
 import mongoose from 'mongoose';
 import { app } from './app'
-import { OrderCancelledListener } from './events/listeners/order-canceled-listener';
-import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { natsWrapper } from './nats-wrapper';
 
 const port = 4000;
@@ -35,8 +33,6 @@ try {
   console.error(error)
 }
 
-new OrderCancelledListener(natsWrapper.client).listen();
-new OrderCreatedListener(natsWrapper.client).listen();
 
 app.listen(port, () => console.log(`app is listning on port ${port}`))
 }
