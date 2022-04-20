@@ -2,6 +2,8 @@ import { response } from 'express';
 import request from 'supertest';
 import { app } from '../../app';
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
+import mongoose from 'mongoose';
 
 it('can only accessed if the user is signed in', async () => {
   const response = await request(app)
@@ -92,4 +94,29 @@ it('published event after the ticket was updated', async () => {
     })
     .expect(202)
     //expect(natsWrapper.client.publish).toHaveBeenCalled();
+})
+
+it('returns error if the ticket is locked for editing', async () => {
+  const postResponse = await request(app)
+  .post('/api/tickets')
+  .set('Cookie', global.signin())
+  .send({
+    title: 'yoav',
+    price: 10
+  })
+  .expect(201);
+
+  const ticket = await Ticket.findById(postResponse.body.id)
+  ticket!.set({orderId: new mongoose.Types.ObjectId().toHexString()})
+  await ticket!.save()
+
+  const postTitle = postResponse.body.title
+  const putResponse = await request(app)
+    .put(`/api/tickets/${postResponse.body.id}`)
+    .set('Cookie', global.signin())
+    .send({
+      title: postTitle,
+      price: 11
+    })
+    .expect(400);
 })

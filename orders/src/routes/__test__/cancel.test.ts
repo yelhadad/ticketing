@@ -2,11 +2,14 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 import { Order, OrderStatus } from '../../models/order';
+import { natsWrapper } from '../../nats-wrapper';
+import mongoose from 'mongoose';
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
     title: 'yoav',
-    price: 200
+    price: 200,
+    id: new mongoose.Types.ObjectId().toHexString()
   });
   await ticket.save();
   return ticket;
@@ -16,7 +19,7 @@ it('returns 400 if the order not found', async () => {
   const user1 = global.signin();
 
   await request(app)
-  .put('/api/orders/djjfdbdjfd')
+  .put(`/api/orders/sfhfsjsa`)
   .set('Cookie', user1)
   .expect(400)
 })
@@ -39,7 +42,7 @@ async () => {
   .expect(401);
 })
 
-it('cancels a ticket succesfuly', async () => {
+it('cancels a order succesfuly', async () => {
   const ticket = await buildTicket();
   const user1 = global.signin();
   const {body: order} = await request(app)
@@ -51,11 +54,29 @@ it('cancels a ticket succesfuly', async () => {
     .expect(201)
 
     const {body: canceledOrder} = await request(app)
-    .put(`/api/orders${order.id}`)
+    .put(`/api/orders/${order.id}`)
     .set('Cookie', user1)
     .expect(202);
 
     expect(canceledOrder.status).toEqual(OrderStatus.Cancelled)
-    
+})
 
+it('published event after order cancelled succesfully', async () => {
+  const ticket = await buildTicket();
+  const user1 = global.signin();
+  const {body: order} = await request(app)
+    .post('/api/orders')
+    .set('Cookie', user1)
+    .send({
+      ticketId: ticket.id
+    })
+    .expect(201)
+
+    const {body: canceledOrder} = await request(app)
+    .put(`/api/orders/${order.id}`)
+    .set('Cookie', user1)
+    .expect(202);
+
+    expect(canceledOrder.status).toEqual(OrderStatus.Cancelled)
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
 })

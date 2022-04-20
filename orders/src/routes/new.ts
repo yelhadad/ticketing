@@ -3,6 +3,9 @@ import { BadRequestError, NotFoundError, OrderStatus, requireAuth, ServerError, 
 import { body } from "express-validator";
 import { Order } from "../models/order";
 import { Ticket } from "../models/ticket";
+import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
+import { natsWrapper } from "../nats-wrapper";
+
 const EXPERATION_WINDOW_SECONDS = 15 * 60   // 15 mins
 export { EXPERATION_WINDOW_SECONDS } 
 const router = Router();
@@ -38,10 +41,23 @@ async (req: Request, res: Response) => {
     userId: req.currentUser!.id,
     status: OrderStatus.Created,
     expiresAt: experation,
-    ticket
+    ticket,
   })
   await order.save();
   // publish event that a new order created
+  await new OrderCreatedPublisher(natsWrapper.client).publish({
+    id: order.id,
+    expiresAt: order.expiresAt.toISOString(),
+    status: order.status,
+    userId: req.currentUser!.id,
+    version: order.version,
+    ticket: {
+      price: order.ticket.price,
+      title: order.ticket.title,
+      id: order.ticket.id,
+    }
+  })
+  
   res.status(201).send(order);
 })
 

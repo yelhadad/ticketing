@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import { OrderStatus} from '@ye-ticketing/common';
 import { TicketDoc } from './ticket';
-import { MongodOpts } from "mongodb-memory-server-core/lib/util/MongoInstance";
 export { OrderStatus };
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface OrderAtts {
   userId: string;
   expiresAt: Date;
-  status: OrderStatus
-  ticket: TicketDoc
+  status: OrderStatus;
+  ticket: TicketDoc;
 }
 
 interface OrderDoc extends mongoose.Document {
@@ -16,6 +16,7 @@ interface OrderDoc extends mongoose.Document {
   expiresAt: Date;
   status: OrderStatus;
   ticket: TicketDoc;
+  version: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -48,6 +49,9 @@ const orderSchema = new mongoose.Schema({
       }
     }
   })
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAtts) => {
   return new Order(attrs);

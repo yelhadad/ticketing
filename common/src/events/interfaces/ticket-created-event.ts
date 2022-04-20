@@ -8,5 +8,6 @@ export interface TicketCreatedEvent extends BaseEvent {
     title: string,
     price: number,
     userId: string
+    version: number;
   }
 };

@@ -6,7 +6,7 @@ import { Order, OrderStatus } from '../../models/order';
 import { EXPERATION_WINDOW_SECONDS } from "../new";
 import mongoose from "mongoose";
 
-const ticketId = new mongoose.Types.ObjectId()
+const ticketId = new mongoose.Types.ObjectId().toHexString()
 const experation = new Date();
 experation.setSeconds(experation.getSeconds() + EXPERATION_WINDOW_SECONDS);
 
@@ -54,7 +54,8 @@ it("returns error if the ticket does'nt exists", async () => {
 it('returns error if the ticket is already reseved', async () => {
   const ticket = Ticket.build({
     title: 'yoav',
-    price: 5
+    price: 5,
+    id: 'sjfsjf'
   });
   await ticket.save();
   const order = Order.build({
@@ -76,7 +77,8 @@ it('returns error if the ticket is already reseved', async () => {
 it('ables to create order successfuly', async () => {
   const ticket = Ticket.build({
     title: 'yoav',
-    price: 5
+    price: 5,
+    id: ticketId
   });
   await ticket.save();
   const response = await request(app)

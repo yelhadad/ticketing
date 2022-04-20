@@ -16,7 +16,7 @@ router.post('/api/tickets', requireAuth,
    body('price').isFloat({gt: 0}).withMessage('price must be greater than zero')
    ],
    validateRequest,
-
+//
   async (req: Request, res: Response ) => {
 
     const {title, price} : {title: string, price: number} = req.body
@@ -31,7 +31,8 @@ router.post('/api/tickets', requireAuth,
         id: newTicket._id,
         title: newTicket.title,
         price: newTicket.price,
-        userId: newTicket.userId
+        userId: newTicket.userId,
+        version: newTicket.version
       })
       console.log('message published')
     } catch (error) {

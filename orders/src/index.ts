@@ -2,6 +2,8 @@ import { ServerError } from '@ye-ticketing/common';
 import mongoose from 'mongoose';
 import { app } from './app'
 import { natsWrapper } from './nats-wrapper';
+import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
+import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
 
 const port = 4000;
 const start = async () =>{
@@ -31,6 +33,8 @@ try {
   console.error(error)
 }
 
+new TicketCreatedListener(natsWrapper.client).listen();
+new TicketUpdatedListener(natsWrapper.client).listen();
 
 app.listen(port, () => console.log(`app is listning on port ${port}`))
 }

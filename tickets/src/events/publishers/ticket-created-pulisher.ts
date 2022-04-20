@@ -10,7 +10,7 @@ export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
     this.subject = Subjects.ticketCreated;
   }
 
-  public publish(data: { id: string; title: string; price: number; userId: string; }): Promise<void> {
+  public publish(data: { id: string; title: string; price: number; userId: string, version: number; }): Promise<void> {
     return super.publish(data)
   }
   

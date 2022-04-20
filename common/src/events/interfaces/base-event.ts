@@ -1,6 +1,7 @@
 import { Subjects } from "../subjects";
 
 export interface BaseEvent {
-  subject: Subjects,
-  data: any
+
+   subject: Subjects;
+   data: any;
 }
