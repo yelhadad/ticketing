@@ -4,6 +4,7 @@ import { ExpirationCompletedEvent, OrderStatus, Subjects } from "@ye-ticketing/c
 import mongoose from "mongoose";
 import { Order } from "../../../models/order";
 import { Ticket } from "../../../models/ticket";
+import { toUnicode } from "punycode";
 
 
 const setup = async () => {
@@ -64,5 +65,7 @@ it('publish event' , async () => {
 
   expect(natsWrapper.client.publish).toHaveBeenCalled()
 });
+
+
 
 

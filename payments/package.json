@@ -1,5 +1,5 @@
 {
-  "name": "orders",
+  "name": "payments",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,7 +23,6 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@ye-ticketing/common": "^1.0.17",
-    "body-parser": "^1.20.0",
     "cookie-session": "^2.0.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
@@ -33,6 +32,7 @@
     "mongoose": "^6.2.4",
     "mongoose-update-if-current": "^1.4.0",
     "node-nats-streaming": "^0.3.2",
+    "stripe": "^8.219.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.3",
     "validator": "^13.7.0"

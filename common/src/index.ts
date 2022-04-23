@@ -20,3 +20,4 @@ export * from './events/types/order-status'
 export * from './events/interfaces/order-cancelled-event';
 export * from './events/interfaces/order-created-event'
 export * from './events/interfaces/expiration-completed-event';
+export * from './events/interfaces/payment-created-event';

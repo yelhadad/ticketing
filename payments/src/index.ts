@@ -2,13 +2,14 @@ import { ServerError } from '@ye-ticketing/common';
 import mongoose from 'mongoose';
 import { app } from './app'
 import { natsWrapper } from './nats-wrapper';
-import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
-import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
-import { ExpirationCompletedListener } from './events/listeners/expiretion-complited-listener';
-import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const port = 4000;
+console.log(process.env.STRIPE_KEY)
 const start = async () =>{
+    let envArr = [process.env.JWT_KEY, process.env.MONGO_URI, process.env.NATS_CLUSTER_ID,
+    process.env.NATS_URL, process.env.NATS_CLIENT_ID]
 if(process.env.JWT_KEY === undefined || process.env.MONGO_URI === undefined ||
   process.env.NATS_CLUSTER_ID === undefined || process.env.NATS_URL === undefined ||
   process.env.NATS_CLIENT_ID === undefined) {
@@ -31,14 +32,13 @@ try {
   
   process.on('SIGINT', () => natsWrapper.client.close())
   process.on('SIGTERM', () => natsWrapper.client.close())
+
+  new OrderCreatedListener(natsWrapper.client).listen();
+  new OrderCancelledListener(natsWrapper.client).listen();
+  
 } catch (error) {
   console.error(error)
 }
-
-new TicketCreatedListener(natsWrapper.client).listen();
-new TicketUpdatedListener(natsWrapper.client).listen();
-new ExpirationCompletedListener(natsWrapper.client).listen();
-new PaymentCreatedListener(natsWrapper.client).listen();
 
 app.listen(port, () => console.log(`app is listning on port ${port}`))
 }
