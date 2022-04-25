@@ -32,11 +32,11 @@ spec:
                   name: jwt-secret
                   key: JWT_KEY
             - name: STRIPE_KEY
-              value: sk_test_51KrLgrHrlHk1pkZJddbDKdgbKhYgnFox2cAT9IT7Dk4SUcuYhPlA9H4c6fqnhKluNGvv0m30TjMSMOxtQs1z6xQT00GxcnV9VH
-              # valueFrom:
-              #  secretKeyRef:
-              #   name: stripe-key-secret
-              #  key: STRIPE_KEY
+              # value: sk_test_51KrLgrHrlHk1pkZJddbDKdgbKhYgnFox2cAT9IT7Dk4SUcuYhPlA9H4c6fqnhKluNGvv0m30TjMSMOxtQs1z6xQT00GxcnV9VH
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-key-secret
+                  key: STRIPE_KEY
 ---
 apiVersion: v1
 kind: Service

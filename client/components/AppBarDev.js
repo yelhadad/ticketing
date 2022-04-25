@@ -10,7 +10,6 @@ import {useRouter} from 'next/router';
 import NextLink from 'next/link'
 
 const AppBarDev = ({ currentUser }) => {
-  const router = useRouter();
   let barLinks = [];
      barLinks = [
       !currentUser.id ? {herf: '/auth/signin', label: 'signin'}: false,
@@ -24,15 +23,13 @@ const AppBarDev = ({ currentUser }) => {
         <Button color='inherit'>{label}</Button>
         </NextLink>
     )})
-    console.log('barLinks:')
   
 
-  console.log(barLinks);
 
 
   return (
     <div>
-        <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

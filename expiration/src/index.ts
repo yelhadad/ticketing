@@ -7,7 +7,7 @@ if(process.env.NATS_CLUSTER_ID === undefined || process.env.NATS_URL === undefin
   process.env.NATS_CLIENT_ID === undefined) {
   throw new ServerError('error in creating envirorment varuble')
 }
-
+//
 try {
   await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID,
   process.env.NATS_URL)

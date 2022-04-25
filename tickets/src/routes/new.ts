@@ -4,6 +4,7 @@ import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { TicketCreatedPublisher } from '../events/publishers/ticket-created-pulisher';
 import { natsWrapper } from '../nats-wrapper';
+import { ticketIndexRouter } from '.';
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.post('/api/tickets', requireAuth,
     const {title, price} : {title: string, price: number} = req.body
     const newTicket = Ticket.build({title, price, userId: req.currentUser!.id});
     await newTicket.save();
+    console.log(await Ticket.find({_id: newTicket.id}))
     // there might be a situation were we saved a record to database and not publish event.
     // to solve this we may save the event to the data base and use transaction to make sure 
     // that the 2 records will save together.
