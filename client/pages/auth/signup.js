@@ -28,9 +28,9 @@ function Copyright(props) {
     </Typography>
   );
 }
-const theme = createTheme();
 
-export default function Signup() {
+export default function Signup({baseTheme}) {
+  const theme = createTheme(baseTheme);
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState();
@@ -129,7 +129,7 @@ export default function Signup() {
             </Button>
             <Grid container justifyContent="center">
               <Grid item >
-                <NextLink href="/auth/signin" variant="body2">
+                <NextLink href="/auth/signin" variant="body2" >
                   {"Already have an account? Sign in"}
                 </NextLink>
               </Grid>

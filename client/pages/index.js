@@ -8,8 +8,9 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import RenderedTickets from '../components/rendered-tickets'
+import { ThemeProvider } from "@emotion/react";
 
- const LandingPage = ({currentUser, tickets}) => {
+ const LandingPage = ({currentUser, tickets, baseTheme}) => {
    console.log('hi')
    console.log(tickets)
 /*
@@ -28,7 +29,8 @@ import RenderedTickets from '../components/rendered-tickets'
 
   return (
     <div className="container" style={{textAlign: 'center', margin: '80px'}}>
-      <Grid container spacing={8}>
+      <ThemeProvider theme={baseTheme}>
+      <Grid container spacing={2}>
        <Grid xs={12}>
        <h2>welcome to tickting.dev</h2>
          </Grid>
@@ -47,7 +49,12 @@ import RenderedTickets from '../components/rendered-tickets'
           <Grid xs={4}  container spacing={2}>
           </Grid>
         </Grid> 
-        <RenderedTickets tickets = {tickets}/>
+        <Grid item xs={2}>
+          <Grid container justifyContent="center" spacing={1}>
+          <RenderedTickets tickets = {tickets}/>
+          </Grid>
+        </Grid>
+        </ThemeProvider>
     </div>
 
   )

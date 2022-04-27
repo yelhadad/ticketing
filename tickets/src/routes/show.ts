@@ -4,8 +4,8 @@ import { Ticket } from '../models/ticket'
 
 const router = express.Router();
 
-router.get('/api/tickets/:id', requireAuth, async (req: Request, res: Response) => {
-  const ticketById = await Ticket.findOne({id: req.params.id}).exec();
+router.get('/api/tickets/:id', async (req: Request, res: Response) => {
+  const ticketById = await Ticket.findById(req.params.id);
   if(!ticketById){
     throw new NotFoundError()
   }

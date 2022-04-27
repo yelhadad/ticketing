@@ -5,26 +5,28 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from "react";
+import NextLink from 'next/link';
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
 
 function SimpleCard(props) {
   const [ tickets, setTicket ] = useState(props.tickets);
+  const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
+    },
+    bullet: {
+      display: 'inline-block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  });
+  
     const classes = useStyles();
     if(!props.tickets){
       return null
@@ -32,7 +34,7 @@ function SimpleCard(props) {
     console.log(props.tickets)
     const renderedTickets = Object.values(tickets).map(({title, price, id}) => {
       return (
-        <Card key={id}>
+        <Grid className="card" key={id} item>
           <CardContent>
             <Typography  color="textSecondary" gutterBottom>
               Title
@@ -50,9 +52,13 @@ function SimpleCard(props) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Learn More</Button>
+            <NextLink href={`/tickets/${id}`}>
+            <Button size="small">
+              show
+            </Button>
+            </NextLink>
           </CardActions>
-        </Card>
+        </Grid>
        
       )
     })

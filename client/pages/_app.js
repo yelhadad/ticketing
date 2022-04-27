@@ -9,13 +9,32 @@ import * as React from 'react';
 import {useRouter} from 'next/router';
 import axios from 'axios';
 import { AppBarDev } from '../components/AppBarDev';
+import { createTheme } from '@material-ui/core/styles';
+
 
 const AppComponet =  ({ Component, pageProps, currentUser }) => {
 
+  const baseTheme = createTheme({
+    palette: {
+      primary: {
+        light: '#51b7ae',
+        main: '#26a69a',
+        dark: '#1a746b',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#ff7961',
+        main: '#f44336',
+        dark: '#ba000d',
+        contrastText: '#000',
+      },
+    },
+  });
+
   return (
     <div>
-      <AppBarDev currentUser={currentUser}/>
-      <Component currentUser={currentUser} {...pageProps} />
+      <AppBarDev currentUser={currentUser} theme={baseTheme}/>
+      <Component currentUser={currentUser} {...pageProps} baseTheme={baseTheme} />
     </div>
   )
 }

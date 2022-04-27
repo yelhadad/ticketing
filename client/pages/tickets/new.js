@@ -29,9 +29,9 @@ function Copyright(props) {
     </Typography>
   );
 }
-const theme = createTheme();
 
-export default function NewTicket() {
+export default function NewTicket({baseTheme}) {
+  const theme = createTheme(baseTheme);
 
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState();
