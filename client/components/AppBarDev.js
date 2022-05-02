@@ -30,7 +30,8 @@ const AppBarDev = ({ currentUser, theme }) => {
      barLinks = [
       !currentUser.id ? {herf: '/auth/signin', label: 'signin'}: false,
       !currentUser.id ? {herf: '/auth/signup', label: 'signup'}: false,
-      currentUser.id ? {herf: '/auth/signout', label: 'signout'}: false
+      currentUser.id ? {herf: '/orders', label: 'my orders'}: false,
+      currentUser.id ? {herf: '/auth/signout', label: 'signout'}: false,
     ]
     .filter(linkConfig => linkConfig)
     .map(({ label, herf}) => {

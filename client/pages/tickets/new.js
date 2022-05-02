@@ -55,8 +55,7 @@ export default function NewTicket({baseTheme}) {
       })
       router.push('/')
     } catch (error) {
-      console.log(error.response.data)
-      setErrors(error.response.data.error)
+      setErrors(error.response.data.errors)
     }
   };
 

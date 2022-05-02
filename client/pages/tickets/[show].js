@@ -3,10 +3,21 @@ import { Grid, Typography, CardContent, CardActions, Button } from "@mui/materia
 import axios from "axios";
 import NextLink from 'next/link';
 import { useRouter } from "next/router";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  cardContent: {
+    textAlign: 'center'
+  },
+  CardActions: {
+    justifyContent: 'center'
+  }
+})
 
 ///////
 const TicketsByUser  = ({currentUser, ticket, baseTheme}) => {
   const router = useRouter();
+  const classes = useStyles();
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -27,9 +38,10 @@ const TicketsByUser  = ({currentUser, ticket, baseTheme}) => {
   }
 
   return( 
-  <div className="card">
-    <ThemeProvider theme={baseTheme}>
-     <CardContent>
+    <div className="container">
+    <ThemeProvider theme={baseTheme} >
+      <Grid xs={6} item className="card" style={{margin: '80px'}}>
+     <CardContent className={classes.cardContent}>
         <Typography color="textSecondary" gutterBottom>
           titile: {ticket.title}
         </Typography>
@@ -46,11 +58,13 @@ const TicketsByUser  = ({currentUser, ticket, baseTheme}) => {
           {'comming soon!'}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={onSubmit} >Order the ticket</Button>
+      <CardActions className={classes.CardActions}>
+        <Button size="small" onClick={onSubmit} variant='contained'>Order the ticket</Button>
       </CardActions>
+      </Grid>
       </ThemeProvider>
-    </div>
+      </div>
+
   );
 }
 

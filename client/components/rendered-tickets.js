@@ -25,6 +25,9 @@ function SimpleCard(props) {
     pos: {
       marginBottom: 12,
     },
+    button: {
+      justifyContent: 'center'
+    }
   });
   
     const classes = useStyles();
@@ -34,7 +37,8 @@ function SimpleCard(props) {
     console.log(props.tickets)
     const renderedTickets = Object.values(tickets).map(({title, price, id}) => {
       return (
-        <Grid className="card" key={id} item>
+        <Grid key={id} item xs={12} sm={4}>
+          <div className="card">
           <CardContent>
             <Typography  color="textSecondary" gutterBottom>
               Title
@@ -51,13 +55,14 @@ function SimpleCard(props) {
               {'"a benevolent smile"'}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.button}>
             <NextLink href={`/tickets/${id}`}>
-            <Button size="small">
+            <Button variant="contained" size="small" >
               show
             </Button>
             </NextLink>
           </CardActions>
+          </div>
         </Grid>
        
       )

@@ -13,6 +13,7 @@ import { ThemeProvider } from "@emotion/react";
  const LandingPage = ({currentUser, tickets, baseTheme}) => {
    console.log('hi')
    console.log(tickets)
+   console.log(currentUser)
 /*
     const [isSignedIn, setIssignIn] = useState('');
 
@@ -32,27 +33,14 @@ import { ThemeProvider } from "@emotion/react";
       <ThemeProvider theme={baseTheme}>
       <Grid container spacing={2}>
        <Grid xs={12}>
-       <h2>welcome to tickting.dev</h2>
+       <h2>{`welcome: ${currentUser.email} to tickting.dev`}</h2>
          </Grid>
          <Grid xs={12}>
-         <Typography variant="h3" component='h2' align="center" color='red' >{'isSignedIn'}</Typography>
-         </Grid>
-          <Grid xs={4}>
-            <AirplaneTicketIcon fontSize='large'/>
-          </Grid>
-          <Grid xs={4}>
-            <AirplaneTicketIcon sx={{fontSize: 60}}/>
-          </Grid>
-          <Grid xs={4}>
-            <AirplaneTicketIcon fontSize='large'/>
-          </Grid>
-          <Grid xs={4}  container spacing={2}>
+         <Typography variant="h3" component='h2' align="center" color='primary' >{'tickets:'}</Typography>
           </Grid>
         </Grid> 
-        <Grid item xs={2}>
-          <Grid container justifyContent="center" spacing={1}>
+        <Grid container xs={12}>
           <RenderedTickets tickets = {tickets}/>
-          </Grid>
         </Grid>
         </ThemeProvider>
     </div>
