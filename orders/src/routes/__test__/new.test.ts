@@ -88,4 +88,5 @@ it('ables to create order successfuly', async () => {
     ticketId: ticket.id
   })
   .expect(201);
+  console.log(response.body)
 })

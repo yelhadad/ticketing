@@ -45,6 +45,12 @@ async (req: Request, res: Response) => {
   })
   await order.save();
   // publish event that a new order created
+
+  const orderCheck = await Order.find({ticket: order.ticket.id})
+  console.log(JSON.stringify(orderCheck))
+  console.log()
+  console.log(await Order.findById(order.id))
+  
   await new OrderCreatedPublisher(natsWrapper.client).publish({
     id: order.id,
     expiresAt: order.expiresAt.toISOString(),
@@ -57,6 +63,7 @@ async (req: Request, res: Response) => {
       id: order.ticket.id,
     }
   })
+
   
   res.status(201).send(order);
 })

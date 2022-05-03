@@ -41,6 +41,8 @@ router.post('/api/tickets', requireAuth,
       console.error(error)
     }
 
+    console.log(await Ticket.find({_id: newTicket.id}))
+
     res.status(201).send(newTicket);
 })
 
