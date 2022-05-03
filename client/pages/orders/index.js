@@ -1,10 +1,13 @@
 import axios from "axios"
+import { RenderedOrders } from '../../components/rendered-tickets'
 
 const Orders = ({orders, baseTheme, currentUser}) => {
   console.log(orders)
   return ( 
-    <div>Orders</div>
-  )
+    <Grid container xs={12}>
+    <RenderedTickets tickets = {orders}/>
+  </Grid>
+    )
 }
 
 
