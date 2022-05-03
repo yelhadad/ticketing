@@ -5,6 +5,7 @@ import { Order } from "../models/order";
 import { Ticket } from "../models/ticket";
 import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 import { natsWrapper } from "../nats-wrapper";
+import { ticketIsReserved } from "../models/ticket";
 
 const EXPERATION_WINDOW_SECONDS = 15 * 60   // 15 mins
 export { EXPERATION_WINDOW_SECONDS } 
@@ -28,8 +29,8 @@ async (req: Request, res: Response) => {
   }
 
   // make sure the ticket is not already reserved
-  console.log(await ticket.isReserved())
-  if(await ticket.isReserved()){
+  console.log(await ticketIsReserved(ticket))
+  if(await ticketIsReserved(ticket)){
     throw new BadRequestError('The ticket is already reseved')
   }
 
@@ -46,11 +47,6 @@ async (req: Request, res: Response) => {
   await order.save();
   // publish event that a new order created
 
-  const orderCheck = await Order.find({ticket: order.ticket.id})
-  console.log(JSON.stringify(orderCheck))
-  console.log()
-  console.log(await Order.findById(order.id))
-  
   await new OrderCreatedPublisher(natsWrapper.client).publish({
     id: order.id,
     expiresAt: order.expiresAt.toISOString(),

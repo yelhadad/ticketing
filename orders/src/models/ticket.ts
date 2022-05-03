@@ -82,6 +82,21 @@ ticketSchema.methods.isReserved = async function() {
   return !!existingOrder;
 }
 
+export const ticketIsReserved = async (ticket: TicketDoc) => {
+  const existingOrder = await Order.findOne({
+    Ticket: ticket,
+    status: {
+      $in: [
+        OrderStatus.Created,
+        OrderStatus.Complete,
+        OrderStatus.AwaitingPayment
+      ]
+    }
+  })
+
+  return !!existingOrder
+};
+
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
 
 export { Ticket }
