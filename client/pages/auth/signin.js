@@ -30,10 +30,9 @@ function Copyright(props) {
     </Typography>
   );
 }
-const theme = createTheme();
 
-export default function Signup() {
-
+export default function Signup({baseTheme}) {
+  const theme = createTheme(baseTheme);
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();

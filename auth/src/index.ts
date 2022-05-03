@@ -1,14 +1,14 @@
-import { ServerError } from './errors/server-error';
+import { ServerError } from '@ye-ticketing/common';
 import mongoose from 'mongoose';
 import { app } from './app'
 
 const port = 4000;
 const start = async () =>{
-if(process.env.JWT_KEY === undefined){
+if(process.env.JWT_KEY === undefined || process.env.MONGO_URI === undefined){
   throw new ServerError('error in creating envirorment varuble')
 }
 try {
-  await mongoose.connect('mongodb://auth-mongo-srv:27017/auth')
+  await mongoose.connect(process.env.MONGO_URI)
   console.log('connecting to mongo')
 } catch (error) {
   console.error(error)

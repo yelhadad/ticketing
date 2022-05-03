@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -29,13 +28,15 @@ function Copyright(props) {
     </Typography>
   );
 }
-const theme = createTheme();
 
-export default function Signup() {
+export default function Signup({baseTheme}) {
+  const theme = createTheme(baseTheme);
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [confermPassword, setConfermPassword] = useState();
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
   const router = useRouter();
 
   const handleErrors = () => {
@@ -48,6 +49,9 @@ export default function Signup() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if(password !== confermPassword){
+      return null;
+    } else {
     //const data = new FormData(event.currentTarget);
     try {
       const response = await axios.post('/api/users/signup', {
@@ -60,7 +64,8 @@ export default function Signup() {
     }
     setEmail('');
     setPassword('');
-  };
+    setConfermPassword('');
+  }};
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,7 +102,7 @@ export default function Signup() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="Password"
               label="Password"
               type="password"
               id="password"
@@ -105,17 +110,26 @@ export default function Signup() {
               onChange={e => setPassword(e.target.value)}
               value={password}
             />
+            <TextField
+            margin='normal' required fullWidth 
+            name='conferm password' label='Conferm Password'
+            type={password} id='conferm-password'
+            onChange={e => setConfermPassword(e.target.value)}
+            value={confermPassword}
+            />
+            {password !== confermPassword && 
+            <Typography variant='h3' color={'red'}>passwords not match</Typography>}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign up
             </Button>
             <Grid container justifyContent="center">
               <Grid item >
-                <NextLink href="/auth/signin" variant="body2">
+                <NextLink href="/auth/signin" variant="body2" >
                   {"Already have an account? Sign in"}
                 </NextLink>
               </Grid>
@@ -133,43 +147,3 @@ export default function Signup() {
     </ThemeProvider>
   );
 }
-=======
-import { useState } from 'react';
-import axios from 'axios'
-const Signup = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response =  await axios.post('/api/users/signup',
-             { email, password })
-             console.log(response)
-        } catch (error) {
-            console.log(error.response)
-        }
-    } 
-
-    return(
-        <form className='container' id='form-signin' onSubmit={onSubmit}
-        style={{width: '600px', height: '1000px', margin: '50px auto' }}>
-            <h3 style={{textAlign: 'center'}}>signup :)</h3>
-            <div class="form-group">
-                <label>Email adrres</label>
-                <input type="email" className='form-control' placeholder='Enter email' onChange={e => setEmail( e.target.value)}/>
-                <small className='form-text text-muted'>for testing purpses</small>
-            </div>
-            <div className='form-group'>
-                <label>Password</label>
-                <input type="password" className='form-control' placeholder='Enter password' onChange={e => setPassword(e.target.value)}/>
-                <small>for testing</small>
-            </div>
-            <div>
-                <button type='submit' className='btn btn-primary'>submit</button>
-            </div>
-        </form>
-    )
-}
-
-export default Signup
->>>>>>> 8eaf65a0aa8c493b62711eae16c1687aec27304a
