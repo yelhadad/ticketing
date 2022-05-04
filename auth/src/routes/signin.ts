@@ -46,7 +46,7 @@ router.post('/api/users/signin',[
     };
 
   // sends jwt to the user
-  return res.status(202).send(userByEmail);
+  return res.status(200).send(userByEmail);
 })
 
 export { router as signinRouter};
