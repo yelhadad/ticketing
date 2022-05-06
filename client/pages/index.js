@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Typography } from "@mui/material";
 import axios from "axios";
 import { Button, Grid } from "@mui/material";
@@ -63,3 +64,11 @@ LandingPage.getInitialProps = async (context, client, currentUser) => {
 
 
 export default LandingPage;
+=======
+const Homepage = () => {
+    return <h1>this is home page
+    </h1>
+}
+
+export default Homepage
+>>>>>>> 8eaf65a0aa8c493b62711eae16c1687aec27304a
