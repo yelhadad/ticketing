@@ -3,8 +3,9 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/*.yaml
+      - ./infra/k8s-pre-deploy/*
       - ./infra/k8s/*
+      - ./infra/k8s-dev/*
 build:
   local:
     push: false
