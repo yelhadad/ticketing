@@ -84,7 +84,9 @@ ticketSchema.methods.isReserved = async function() {
 
 export const ticketIsReserved = async (ticket: TicketDoc) => {
   const existingOrder = await Order.findOne({
-    Ticket: ticket,
+    ticket: {
+      _id: ticket.id
+    },
     status: {
       $in: [
         OrderStatus.Created,
@@ -93,7 +95,7 @@ export const ticketIsReserved = async (ticket: TicketDoc) => {
       ]
     }
   })
-
+  console.log(existingOrder)
   return !!existingOrder
 };
 

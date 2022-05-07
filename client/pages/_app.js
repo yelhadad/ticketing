@@ -64,3 +64,4 @@ AppComponet.getInitialProps = async (appContext) => {
 }
 
 export default AppComponet;
+
