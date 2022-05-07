@@ -4,6 +4,7 @@ import { app } from './app'
 
 const port = 4000;
 const start = async () =>{
+  console.log('starting...')
 if(process.env.JWT_KEY === undefined || process.env.MONGO_URI === undefined){
   throw new ServerError('error in creating envirorment varuble')
 }
