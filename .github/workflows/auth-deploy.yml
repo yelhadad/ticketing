@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: | 
-          cd auth
-          docker build -t yelhadad/auth .
+      - run: cd auth && docker build -t yelhadad/auth .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -22,9 +20,7 @@ jobs:
         with: 
           token:
             ${{ secrets.DIGITAL_OCEAN_TOKEN }}
-      - run: |
-          doctl kubernetes cluster kubeconfig save ticketing
-          kubectl rollout restart deployment auth-depl
+      - run: doctl kubernetes cluster kubeconfig save ticketing && kubectl rollout restart deployment auth-depl
           
       
       
