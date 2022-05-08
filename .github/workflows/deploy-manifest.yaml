@@ -1,4 +1,4 @@
-name: orders-deploy
+name: manifest-deploy
 # Controls when the workflow will run
 on:
   push:
