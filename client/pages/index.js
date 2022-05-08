@@ -11,7 +11,7 @@ import RenderedTickets from '../components/rendered-tickets'
 import { ThemeProvider } from "@emotion/react";
 
  const LandingPage = ({currentUser, tickets, baseTheme}) => {
-   console.log('hi')
+   console.log('hihh')
    console.log(tickets)
    console.log(currentUser)
 /*
