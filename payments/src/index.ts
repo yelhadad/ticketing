@@ -13,7 +13,7 @@ const start = async () =>{
 if(process.env.JWT_KEY === undefined || process.env.MONGO_URI === undefined ||
   process.env.NATS_CLUSTER_ID === undefined || process.env.NATS_URL === undefined ||
   process.env.NATS_CLIENT_ID === undefined) {
-  throw new ServerError('error in creating envirorment varuble')
+  throw new ServerError('error in creating envirorment varuble...')
 }
 try {
   await mongoose.connect(process.env.MONGO_URI)
