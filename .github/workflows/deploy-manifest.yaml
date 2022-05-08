@@ -17,8 +17,8 @@ jobs:
             ${{ secrets.DIGITAL_OCEAN_TOKEN }}
       - run: cd infra
       - run: doctl kubernetes cluster kubeconfig save ticketing
-      - run: kubectl apply -f k8s/**
-      - run: kubectl apply -f k8s-prod/**
+      - run: kubectl apply -f k8s
+      - run: kubectl apply -f k8s-prod
           
       
       
