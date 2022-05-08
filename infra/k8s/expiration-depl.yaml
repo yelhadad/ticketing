@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: expiration-depl
-  # namespace: tickting
+  # namespace: tickting..
 spec:
   replicas: 1
   selector:
