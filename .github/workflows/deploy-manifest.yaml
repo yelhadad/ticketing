@@ -1,11 +1,14 @@
 name: manifest-deploy
 # Controls when the workflow will run
-on:
+on: 
+  workflow_dispatch: 
   push:
     branches:
       - "main"
     paths:
       - "infra/**"
+  
+    
 jobs:
   build:
     runs-on: ubuntu-latest
