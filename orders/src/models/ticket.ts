@@ -83,10 +83,7 @@ ticketSchema.methods.isReserved = async function() {
 }
 
 export const ticketIsReserved = async (ticket: TicketDoc) => {
-  const existingOrder = await Order.findOne({
-    ticket: {
-      _id: ticket.id
-    },
+  const existingOrders = await Order.find({
     status: {
       $in: [
         OrderStatus.Created,
@@ -94,10 +91,19 @@ export const ticketIsReserved = async (ticket: TicketDoc) => {
         OrderStatus.AwaitingPayment
       ]
     }
-  })
-  console.log(existingOrder)
-  return !!existingOrder
-};
+  });
+  let existingOrder = null
+  if(existingOrders){
+    for (let i=0; i<existingOrders.length; i++){
+      if(existingOrders[i].ticket._id === ticket.id){
+        existingOrder = existingOrders[i];
+      };
+    };
+    console.log(existingOrders);
+    return !!existingOrder;
+  };
+  
+  }
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
 
