@@ -4,7 +4,7 @@ import { requireAuth } from '@ye-ticketing/common';
 
 const router = express.Router();
 
-router.get('/api/users/currentUser', currentUser, requireAuth, (req: Request, res: Response) => {
+router.get('/api/users/currentUser', currentUser,  (req: Request, res: Response) => {
   res.send(req.currentUser || null);
 })
 
