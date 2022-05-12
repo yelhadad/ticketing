@@ -58,8 +58,9 @@ AppComponet.getInitialProps = async (appContext) => {
     currentUser: response.data
   }
  } catch (error) {
+   console.log('errorrrrrrrrrrrrr:')
     console.log(error);
-    return {currentUser: error.response.data.error}
+    return {currentUser: 'no user'}
   }
 }
 
